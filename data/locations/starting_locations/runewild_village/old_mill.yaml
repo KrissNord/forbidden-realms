@@ -1,0 +1,10 @@
+name: Old MIll
+short_description: ...
+detailed_description: ...
+items:
+  - hay 
+  - wood_log
+  - stone 
+npcs:
+exits:
+  west: village_entrance

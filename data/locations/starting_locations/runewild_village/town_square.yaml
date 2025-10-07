@@ -1,0 +1,9 @@
+name: Town Square
+short_description: The town square is bustling with life.
+detailed_description: All the merchants have gathered around to sell their wares.
+items:
+  - gold coin
+npcs:
+  - armorer_felix
+exits:
+  south: village_entrance

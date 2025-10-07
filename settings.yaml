@@ -1,0 +1,9 @@
+# Forbidden Realms Settings
+# Edit these values and restart the game 
+
+# Enable or disable colored text (true/false)
+colors_enabled: true
+
+# Maximum width for text descriptions (characters)
+# Recommended: 80-100 for most terminals
+text_width: 90

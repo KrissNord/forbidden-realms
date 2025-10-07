@@ -1,0 +1,11 @@
+name: Village Entrance
+short_description: A worn dirt path leads into the village.
+detailed_description: The village entrance is marked by two wooden posts...
+items:
+  - small_health_potion
+  - wooden_branch
+npcs:
+  - guard_tom
+exits:
+  north: town_square
+  east: old_mill
