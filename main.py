@@ -5,6 +5,7 @@ from textwrap import dedent
 
 import yaml
 from rich.console import Console
+from rich.panel import Panel
 
 from src.helpers.display import print_styled
 from src.helpers.save_load import load_game, save_game
@@ -96,26 +97,74 @@ if validate_exits(locations, console, settings) and validate_npcs(
                 if direction in current_location["exits"]:
                     current_location_id = current_location["exits"][direction]
                     current_location = locations[current_location_id]
-                    print_styled(
-                        console, settings, current_location["name"], style="bold cyan"
+                    console.clear()
+                    entry_content = f"[bright_white]{current_location['short_description']}[/bright_white]\n\n"
+
+                    if current_location["npcs"]:
+                        npc_names = [
+                            npcs[npc]["name"] for npc in current_location["npcs"]
+                        ]
+                        entry_content += f"[bold yellow]People:[/bold yellow] {', '.join(npc_names)}\n"
+
+                    exit_directions = ", ".join(current_location["exits"].keys())
+                    entry_content += (
+                        f"[bold yellow]Exits:[/bold yellow] {exit_directions}"
                     )
-                    print_styled(
-                        console, settings, current_location["short_description"]
+
+                    console.print(
+                        Panel(
+                            entry_content,
+                            title=f"[bold cyan]{current_location['name']}[/bold cyan]",
+                            border_style="cyan",
+                        )
                     )
             elif action == "talk":
                 name_parts = parts[1:]
                 name_id = "_".join(name_parts)
                 full_name = " ".join(name_parts)
                 if name_id in current_location["npcs"]:
-                    print_styled(
-                        console, settings, npcs[name_id]["name"], style="bold yellow"
-                    )
-                    print_styled(
-                        console,
-                        settings,
-                        npcs[name_id]["greeting_message"],
-                        style="green",
-                    )
+                    current_node = "greeting"
+
+                    while True:
+                        node_data = npcs[name_id]["dialogues"][current_node]
+
+                        print_styled(
+                            console,
+                            settings,
+                            npcs[name_id]["name"],
+                            style="bold yellow",
+                        )
+                        print_styled(
+                            console, settings, node_data["text"], style="green"
+                        )
+                        console.print()
+                        for index, choice in enumerate(node_data["choices"], start=1):
+                            print_styled(
+                                console,
+                                settings,
+                                f"{index}. {choice['text']}",
+                                style="blue",
+                            )
+                        if len(node_data["choices"]) == 0:
+                            break
+
+                        try:
+                            console.print()
+                            user_input = console.input("[bold cyan]> [/]")
+                            choice_num = int(user_input)
+
+                            selected_choice = node_data["choices"][choice_num - 1]
+                            next_node = selected_choice["goes_to"]
+
+                            current_node = next_node
+                        except:
+                            print_styled(
+                                console,
+                                settings,
+                                "Invalid choice, please try again.",
+                                style="red",
+                            )
+                            continue
                 else:
                     print_styled(
                         console,
@@ -126,11 +175,36 @@ if validate_exits(locations, console, settings) and validate_npcs(
         elif command == "quit":
             break
         elif command == "look":
-            print_styled(
-                console,
-                settings,
-                current_location["detailed_description"],
-                style="bright_white",
+            console.clear()
+            content = f"[bright_white]{current_location['detailed_description']}[/bright_white]\n\n"
+
+            if current_location["npcs"]:
+                content += "[bold yellow]People here:[/bold yellow]\n"
+                for npc in current_location["npcs"]:
+                    npc_name = npcs[npc]["name"]
+                    content += f"   • {npc_name}\n"
+
+                content += "\n"
+
+            if current_location["items"]:
+                content += f"[bold yellow]Items here:[/bold yellow]\n"
+                for item in current_location["items"]:
+                    item_display = item.replace("_", " ").title()
+                    content += f"   • {item_display}\n"
+
+            content += "\n"
+
+            content += f"[bold yellow]Exits:[/bold yellow]\n"
+            for direction, destination_id in current_location["exits"].items():
+                destination_name = locations[destination_id]["name"]
+                content += f"   • {direction}: {destination_name}\n"
+
+            console.print(
+                Panel(
+                    content,
+                    title=f"[bold cyan]{current_location['name']}[/bold cyan]",
+                    border_style="cyan",
+                )
             )
         elif command == "save":
             save_game(current_location_id, console, settings)
