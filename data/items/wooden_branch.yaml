@@ -1,0 +1,9 @@
+item_id: wooden_branch
+name: Wooden Branch
+description: A sturdy wooden branch, worn smooth by time and weather. It's about an arm's length and surprisingly solid. Could be useful as a simple weapon or crafting material.
+type: material
+value: 5
+consumable: false
+effects: {}
+rarity: common
+weight: 1.5

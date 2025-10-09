@@ -78,3 +78,22 @@ def validate_graph_connectivity(locations, console, settings):
             )
 
     return not has_errors
+
+
+def validate_items(locations, items, console, settings):
+    has_errors = False
+
+    for location_id, location_data in locations.items():
+        location_items = location_data.get("items", [])
+        if location_items:
+            for item_id in location_items:
+                if item_id not in items:
+                    print_styled(
+                        console,
+                        settings,
+                        f"ERROR: Location '{location_id}' references missing item '{item_id}'",
+                        style="red",
+                    )
+                    has_errors = True
+
+    return not has_errors

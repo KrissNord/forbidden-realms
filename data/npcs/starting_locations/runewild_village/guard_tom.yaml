@@ -66,6 +66,7 @@ dialogues:
   
   quest_accept:
     text: "Now that's what I like to hear! The mill's just east of the village square - can't miss it. Watch yourself in there, and don't go in alone if you can help it. Clear out the rats, and there's 50 gold in it for you, plus whatever you find in there. Good hunting!"
+    trigger_quest: rat_problem
     choices: []
   
   quest_decline:

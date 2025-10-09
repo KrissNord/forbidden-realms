@@ -1,0 +1,9 @@
+item_id: wood_log
+name: Wood Log
+description: A thick log of oak, its bark rough and weathered. It's heavy but well-seasoned, perfect for building or burning. You can see the rings marking decades of growth.
+type: material
+value: 8
+consumable: false
+effects: {}
+rarity: common
+weight: 5.0

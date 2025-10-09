@@ -2,9 +2,9 @@ name: Old MIll
 short_description: ...
 detailed_description: ...
 items:
-  - hay 
+  - hay
   - wood_log
-  - stone 
+  - stone
 npcs:
 exits:
   west: village_entrance

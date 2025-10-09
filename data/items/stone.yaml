@@ -1,0 +1,9 @@
+item_id: stone
+name: Stone
+description: A smooth gray stone, worn by water and time. It fits comfortably in your palm and has a satisfying weight to it. Could be used for construction, a simple tool, or even as an improvised weapon.
+type: material
+value: 1
+consumable: false
+effects: {}
+rarity: common
+weight: 3.0

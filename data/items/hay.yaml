@@ -1,0 +1,9 @@
+item_id: hay
+name: Hay
+description: A bundle of dried golden hay, still smelling faintly of summer fields. It's tied together with rough twine and could be useful as animal feed or simple bedding material.
+type: material
+value: 2
+consumable: false
+effects: {}
+rarity: common
+weight: 2.0

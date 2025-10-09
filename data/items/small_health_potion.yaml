@@ -1,0 +1,10 @@
+item_id: small_health_potion
+name: Small Health Potion
+description: A small vial filled with a shimmering red liquid. The potion glows faintly, and you can feel warmth radiating from the glass. Drinking it would restore a small amount of health.
+type: potion
+value: 25
+consumable: true
+effects:
+  heal: 20
+rarity: common
+weight: 0.1

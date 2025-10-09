@@ -1,0 +1,17 @@
+name: Rat Infestation
+description: "Guard Tom has asked you to clear out the rats that have infested Old Mill. The creatures have grown unusually bold, and the townsfolk are beginning to worry."
+giver: guard_tom
+stages:
+  - id: not_started
+    description: Speak with Guard Tom about finding work.
+  - id: active
+    description: Clear the rats from the Old Mill and return to Guard Tom.
+  - id: completed
+    description: You've helped Guard Tom deal with the rat problem. The village is safer for it.
+objectives:
+  - description: Defeat the rats at the Old Mill
+    completed: false 
+rewards:
+  gold: 50
+  items:
+    - minor_healing_potion

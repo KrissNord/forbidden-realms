@@ -1,0 +1,9 @@
+item_id: gold_coin
+name: Gold Coin
+description: A shiny gold coin stamped with the royal seal. The metal gleams in the light, and you can feel its substantial weight. This single coin represents a day's wages for a common laborer.
+type: currency
+value: 1
+consumable: false
+effects: {}
+rarity: uncommon
+weight: 0.01
