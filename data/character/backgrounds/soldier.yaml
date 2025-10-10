@@ -1,0 +1,21 @@
+background_id: soldier
+name: Soldier
+description: You served in the military, trained in discipline and combat. Years of marching, drilling, and following orders have made you tough and reliable. You understand command structure and can read the flow of battle instinctively.
+
+stat_bonuses:
+  strength: 1
+  agility: 0
+  intelligence: 0
+  vitality: 1
+  wisdom: 0
+  charisma: 1
+  luck: 0
+
+special_item: military_badge
+
+benefits:
+  - Disciplined: +1 to morale checks
+  - Combat Veteran: +5% damage in group combat
+  - Respected: Guards and soldiers are more helpful
+
+starting_gold: 50

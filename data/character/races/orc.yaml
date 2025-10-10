@@ -1,0 +1,19 @@
+race_id: orc
+name: Orc
+description: Powerful and fierce, orcs are warriors born and bred. Their raw strength and battle prowess are legendary, though they often struggle with more subtle pursuits. Orcish culture values honor, strength, and loyalty above all else.
+
+stat_bonuses:
+  strength: 3
+  agility: 0
+  intelligence: -1
+  vitality: 2
+  wisdom: 0
+  charisma: -1
+  luck: 1
+
+traits:
+  - Berserker Rage: Damage +20% when below 30% health
+  - Intimidating Presence: +3 to intimidation checks
+  - Tough Hide: Natural armor +2
+
+starting_location: village_entrance

@@ -1,0 +1,19 @@
+race_id: human
+name: Human
+description: Adaptable and ambitious, humans are the most populous race in the realms. Their versatility allows them to excel in any path they choose. Known for their determination and social skills, humans make natural leaders and diplomats.
+
+stat_bonuses:
+  strength: 1
+  agility: 0
+  intelligence: 0
+  vitality: 1
+  wisdom: 1
+  charisma: 2
+  luck: 1
+
+traits:
+  - Versatile: Humans adapt quickly to new situations
+  - Social: Natural diplomats and traders (+10% better prices)
+  - Ambitious: Learn skills 10% faster
+
+starting_location: village_entrance

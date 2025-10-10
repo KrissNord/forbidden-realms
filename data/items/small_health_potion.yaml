@@ -7,4 +7,4 @@ consumable: true
 effects:
   heal: 20
 rarity: common
-weight: 0.1
+weight: 0.1  # kg

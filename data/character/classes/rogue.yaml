@@ -1,0 +1,25 @@
+class_id: rogue
+name: Rogue
+description: Cunning and quick, rogues strike from the shadows with deadly precision. Masters of stealth and deception, they excel at critical hits, evasion, and exploiting enemy weaknesses. What they lack in direct confrontation, they make up for in versatility and cunning.
+
+stat_bonuses:
+  strength: 1
+  agility: 4
+  intelligence: 0
+  vitality: 0
+  wisdom: 0
+  charisma: 1
+  luck: 2
+
+starting_items:
+  - steel_dagger
+  - leather_armor
+  - lockpicks
+  - smoke_bomb
+
+abilities:
+  - Backstab: Deal 200% damage from stealth (Costs 25 stamina)
+  - Evasion: Dodge next attack automatically (Costs 15 stamina)
+  - Poison Blade: Apply poison dealing damage over time (Costs 20 stamina)
+
+playstyle: High mobility assassin, relies on crits and dodging

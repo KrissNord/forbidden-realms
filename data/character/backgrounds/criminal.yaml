@@ -1,0 +1,21 @@
+background_id: criminal
+name: Criminal
+description: You've lived on the wrong side of the law, whether by choice or necessity. Street smarts, quick fingers, and knowing when to run have kept you alive. The underground network knows your name, for better or worse.
+
+stat_bonuses:
+  strength: 0
+  agility: 1
+  intelligence: 0
+  vitality: 0
+  wisdom: 0
+  charisma: 1
+  luck: 1
+
+special_item: thieves_tools
+
+benefits:
+  - Street Smart: +2 to pickpocket and lockpick checks
+  - Underworld Connections: Can access black markets
+  - Slippery: +10% escape chance from combat
+
+starting_gold: 25

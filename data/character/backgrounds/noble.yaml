@@ -1,0 +1,21 @@
+background_id: noble
+name: Noble
+description: Born into wealth and privilege, you were raised with the finest education and training. You understand politics, etiquette, and the art of influence. While some may see you as soft, your family name opens doors others can't even see.
+
+stat_bonuses:
+  strength: 0
+  agility: 0
+  intelligence: 1
+  vitality: 0
+  wisdom: 0
+  charisma: 2
+  luck: 0
+
+special_item: signet_ring
+
+benefits:
+  - Well-Connected: +3 to persuasion with nobility
+  - Wealthy: Start with 150 gold instead of base amount
+  - Refined: Can attend exclusive social events
+
+starting_gold: 150

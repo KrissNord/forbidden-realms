@@ -1,0 +1,19 @@
+race_id: elf
+name: Elf
+description: Graceful and long-lived, elves possess an innate connection to magic and nature. Their keen senses and agile movements make them excellent scouts and spellcasters. Elven society values art, knowledge, and harmony with the natural world.
+
+stat_bonuses:
+  strength: -1
+  agility: 3
+  intelligence: 2
+  vitality: 0
+  wisdom: 1
+  charisma: 1
+  luck: 0
+
+traits:
+  - Keen Senses: +2 to perception checks
+  - Natural Magic: Mana regeneration +1 per turn
+  - Agile: +5% dodge chance
+
+starting_location: village_entrance

@@ -6,4 +6,4 @@ value: 1
 consumable: false
 effects: {}
 rarity: uncommon
-weight: 0.01
+weight: 0.01  # kg
