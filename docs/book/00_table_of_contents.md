@@ -70,39 +70,43 @@
 
 ---
 
-**Milestone 1 Checkpoint:** You now have a playable world you can explore and save!
+### Chapter 5.5: Refactoring to Classes - Better Code Organization
+- What are classes and objects?
+- Why refactor working code?
+- Understanding self and methods
+- Refactoring variables to a Player class
+- When to use classes vs simple variables
+
+**Concepts:** OOP basics, classes, __init__, self, refactoring, encapsulation
+
+**Challenge:** Create Player class and refactor main.py
+**Skeleton:** Player class template with TODOs
+
+**Important:** This bridges M0 → M1. All future chapters assume you have a Player class!
+
+---
+
+**Milestone 0 Complete!** 🎉 You now have a playable world with organized, maintainable code!
 
 ---
 
 ## Part 2: Bringing the World to Life (M1)
 
-### Chapter 6: Object-Oriented Programming - The Player Class
-- Why use classes?
-- The `__init__` method
-- Instance attributes vs local variables
-- Methods: functions that belong to objects
-
-**Concepts:** Classes, self, __init__, methods
-
-**Challenge:** Add a `gold` attribute and `add_gold()` method
-**Skeleton:** Player class with TODOs for inventory management
-
----
-
-### Chapter 7: Dialogue Trees - Talking to NPCs
+### Chapter 6: Dialogue Trees - Conversations with NPCs
 - Designing branching conversations
 - Node-based dialogue structure
 - Handling player choices
 - State management (tracking dialogue progress)
+- YAML dialogue format
 
-**Concepts:** Nested dictionaries, recursion/loops, state machines
+**Concepts:** Nested dictionaries, state machines, recursion/loops
 
 **Challenge:** Create a merchant NPC with buy/sell dialogue
-**Skeleton:** Dialogue loop with TODO for choice handling
+**Skeleton:** Dialogue loop with TODOs for choice handling
 
 ---
 
-### Chapter 8: Quest Systems - Giving Players Goals
+### Chapter 7: Quest Systems - Giving Players Goals
 - Quest structure (objectives, rewards, states)
 - Triggering quests from dialogue
 - Tracking quest progress
@@ -115,7 +119,7 @@
 
 ---
 
-### Chapter 9: Inventory - Managing Items
+### Chapter 8: Inventory - Managing Items
 - List operations (append, remove, in)
 - Item lookup patterns
 - State persistence (items in locations + player inventory)
@@ -128,7 +132,7 @@
 
 ---
 
-### Chapter 10: The Item System - YAML Data Files
+### Chapter 9: The Item System - YAML Data Files
 - Creating a flexible item schema
 - Loading items at startup
 - Graceful fallbacks (what if item file is missing?)
@@ -147,7 +151,7 @@
 
 ## Part 3: Character Depth (M2)
 
-### Chapter 11: Stats System - Numbers That Matter
+### Chapter 10: Stats System - Numbers That Matter
 - Primary stats (what they affect)
 - Calculated stats (formulas from primary stats)
 - Stat modifiers (race + class + background)
@@ -160,7 +164,7 @@
 
 ---
 
-### Chapter 12: Character Creation Flow
+### Chapter 11: Character Creation Flow
 - Sequential prompts
 - Input validation patterns
 - The try/except pattern for number input
@@ -173,7 +177,7 @@
 
 ---
 
-### Chapter 13: Races, Classes, Backgrounds
+### Chapter 12: Races, Classes, Backgrounds
 - Modular character building
 - YAML-driven design choices
 - Stat bonuses and starting items
@@ -192,11 +196,11 @@
 
 ## Part 4: Advanced Topics (Future Milestones)
 
-### Chapter 14: Combat System (M4)
-### Chapter 15: Merchant and Economy (M3)
-### Chapter 16: Companion System (M5)
-### Chapter 17: Crafting and Gathering (M7)
-### Chapter 18: Natural Language Parsing (M8)
+### Chapter 13: Combat System (M4)
+### Chapter 14: Merchant and Economy (M3)
+### Chapter 15: Companion System (M5)
+### Chapter 16: Crafting and Gathering (M7)
+### Chapter 17: Natural Language Parsing (M8)
 
 ---
 
