@@ -26,6 +26,25 @@ Before we code, let's think about what "game state" actually means.
 - **Player's inventory** - What items they've collected
 - **Location items** - Which items are still in each location (some might have been picked up)
 
+---
+
+**⚠️ CRITICAL WARNING: The #1 Save/Load Bug**
+
+**THE PROBLEM:** If you only save player data (location + inventory) and forget to save location items, **items will respawn every time you load the game!**
+
+**Why it happens:**
+1. Player picks up wooden_branch from village
+2. You save: current_location and inventory
+3. Game quits
+4. Game restarts and reloads locations from YAML (fresh, original state!)
+5. wooden_branch is back in the village (it respawned!)
+
+**This is the most common save/load bug in game development.** You MUST save the current state of location items, not just reload them from YAML.
+
+We'll handle this properly in the code below. But be warned: forgetting this step will waste hours of debugging!
+
+---
+
 **Later, you'll also save:**
 - Quest progress
 - NPC dialogue state
@@ -130,6 +149,8 @@ save_data = {
 ```
 
 **Why include version?** Future versions of your game might save more data. The version number helps you handle old save files gracefully.
+
+**Note:** Right now we're using simple variables (`current_location`, `inventory`). Later in the book, these will move into a Player class (`player.current_location`, `player.inventory`). The save/load logic remains the same - you're just saving/loading object attributes instead of standalone variables.
 
 ### Step 2: Create the Save Directory
 
@@ -435,7 +456,10 @@ Time to test your implementation thoroughly!
 7. Type `inventory`
 8. ✅ Wooden Branch should still be in your inventory
 
-**Test 3: Items don't respawn (THIS IS CRITICAL)**
+**Test 3: Items don't respawn (⚠️ THIS IS THE CRITICAL TEST!)**
+
+This tests whether you properly saved location_items. If this fails, you have the respawning bug!
+
 1. Go to a location with an item
 2. Type `look` - note the item is there
 3. Type `take [item]`
@@ -446,6 +470,8 @@ Time to test your implementation thoroughly!
 8. Type `load`
 9. Type `look`
 10. ✅ Item should STILL be gone (not respawned!)
+
+**If the item respawned:** You forgot to restore location_items in your load function! Go back and check the "Restore location items" section.
 
 **Test 4: Movement persistence**
 1. Type `go north` (move to a different location)

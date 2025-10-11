@@ -46,6 +46,8 @@ current_location = locations["town_square"]
 
 That's it. The "movement" is just updating a reference!
 
+**Note:** Right now we're using a simple `current_location` variable. Later in the book, you'll organize this into a `Player` class where it becomes `player.current_location`. The concept is the same - just better organization!
+
 ---
 
 ## Concept: Parsing Multi-Word Commands
@@ -204,33 +206,38 @@ while True:
 
 ```python
 if action == "go":
-    # TODO: Get direction from command
-    direction = # ???
-
-    # TODO: Check if direction exists in exits
-    if direction in current_location["exits"]:
-
-        # TODO: Get destination location ID
-        # Hint: current_location["exits"][direction] gives you the location_id
-        new_location_id = # ???
-
-        # TODO: Update current_location
-        # Hint: current_location = locations[new_location_id]
-
-
-        # TODO: Clear screen for clean look
-        # Hint: console.clear()
-
-
-        # TODO: Display new location name
-
-
-        # TODO: Display new location short description
-
-
+    # TODO: Check if player provided a direction
+    if len(parts) < 2:
+        console.print("Go where?", style="red")
     else:
-        # TODO: Show error - can't go that way
-        # Hint: console.print(f"You can't go {direction} from here.", style="red")
+        # TODO: Get direction from command and convert to lowercase
+        # (This handles "go North", "go NORTH", "go north" all the same)
+        direction = # ??? (Hint: parts[1].lower())
+
+        # TODO: Check if direction exists in exits
+        if direction in current_location["exits"]:
+
+            # TODO: Get destination location ID
+            # Hint: current_location["exits"][direction] gives you the location_id
+            new_location_id = # ???
+
+            # TODO: Update current_location
+            # Hint: current_location = locations[new_location_id]
+
+
+            # TODO: Clear screen for clean look
+            # Hint: console.clear()
+
+
+            # TODO: Display new location name
+
+
+            # TODO: Display new location short description
+
+
+        else:
+            # TODO: Show error - can't go that way
+            # Hint: console.print(f"You can't go {direction} from here.", style="red")
 
 ```
 
@@ -486,9 +493,11 @@ if direction in current_location["exits"]:
 # YAML has: "north" (lowercase)
 # Result: "You can't go North from here" (even though north exists!)
 
-# FIX - convert to lowercase
+# FIX - convert to lowercase (we included this in the skeleton!)
 direction = parts[1].lower()
 ```
+
+**Good news:** If you followed the skeleton code with `.lower()`, you already handled this! This is why converting user input to lowercase is a best practice in text games.
 
 ### Mistake 4: Exits point to non-existent locations
 

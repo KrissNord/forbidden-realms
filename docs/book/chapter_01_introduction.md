@@ -161,7 +161,13 @@ pip install rich pyyaml
 ### Step 5: Create Your First File
 
 ```bash
+# On macOS/Linux:
 touch main.py
+
+# On Windows:
+type nul > main.py
+
+# Or simply open your code editor and save an empty file named main.py
 ```
 
 Open `main.py` in your favorite code editor. Let's write some code!
@@ -350,19 +356,21 @@ while True:
 
 ```python
 while True:
-    command = input("> ")
+    command = console.input("[bold white]> [/bold white]")
 
     if command == "quit":
+        console.print("[green]Thanks for playing![/green]")
         break
     elif command == "help":
-        print("Commands: help, quit")
+        console.print("Commands: help, quit", style="blue")
     else:
-        print(f"Unknown command: {command}")
+        console.print(f"Unknown command: {command}", style="red")
 ```
 
 **Key concepts:**
 - `while True:` loops forever
 - `break` exits the loop
+- `console.input()` gets styled input (vs plain `input()`)
 - Get input → process → repeat
 
 ### Final Challenge: Basic Game Loop

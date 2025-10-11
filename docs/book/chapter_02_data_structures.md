@@ -137,10 +137,19 @@ Let's create a location file and load it into your game.
 ### Step 1: Create the Directory Structure
 
 ```bash
+# On macOS/Linux:
+mkdir -p data/locations
+
+# On Windows (Command Prompt):
+mkdir data\locations
+
+# On Windows (PowerShell):
 mkdir -p data/locations
 ```
 
 This creates nested directories: `data/` and inside it, `locations/`.
+
+**Note:** The `-p` flag (on Unix systems) creates parent directories if needed and doesn't error if they already exist.
 
 ### Step 2: Create Your First Location File
 
@@ -535,6 +544,8 @@ Let's trace how data moves through your program:
 ```
 
 **Key insight:** `current_location` is a **reference** to one of the dictionaries in `locations`. When you change which location the player is in, you just update that reference!
+
+**Note for later:** Right now we're using a simple `current_location` variable. In a future chapter, we'll move this into a `Player` class (with `player.current_location`). This makes the code more organized as the game grows. For now, the simple variable approach helps you focus on the core concepts.
 
 ---
 
