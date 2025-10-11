@@ -580,7 +580,39 @@ def load_settings():
 
 def save_settings(settings):
     """Save game settings to JSON"""
-    # TODO: Similar to save_game, but write to data/settings.json
+    with open("data/settings.json", "w") as file:
+        json.dump(settings, file, indent=2)
+```
+
+**Using settings in your game:**
+
+```python
+# At startup
+settings = load_settings()
+
+# Apply to Rich console
+console = Console(width=settings["text_width"])
+
+# In game loop - add a settings command
+elif action == "settings":
+    if len(parts) >= 3:
+        # Example: settings text_width 120
+        setting_name = parts[1]
+        setting_value = parts[2]
+
+        if setting_name == "text_width":
+            settings["text_width"] = int(setting_value)
+            save_settings(settings)
+            console.print(f"[green]Text width set to {setting_value}[/green]")
+        elif setting_name == "show_tips":
+            settings["show_tips"] = setting_value.lower() == "true"
+            save_settings(settings)
+            console.print(f"[green]Show tips: {settings['show_tips']}[/green]")
+    else:
+        # Show current settings
+        console.print("[bold cyan]Current Settings:[/bold cyan]")
+        for key, value in settings.items():
+            console.print(f"  {key}: {value}")
 ```
 
 ---
@@ -825,7 +857,72 @@ Saves:
   2. Bob (Level 3) - 1 day ago
 ```
 
-### Extension 4: Cloud Saves
+### Extension 4: Version Migration
+
+Handle old save files when your save format changes.
+
+**Example scenario:** v0.0.1 didn't save location_items. v0.0.2 does. How do you handle old saves?
+
+**Solution:**
+
+```python
+def load_game(player, locations, console, settings):
+    """Load game with version checking and migration"""
+
+    # ... load JSON ...
+
+    # Check version and migrate if needed
+    if "version" not in loaded_data:
+        # Very old save - assume v0.0.1
+        loaded_data["version"] = "0.0.1"
+
+    version = loaded_data["version"]
+
+    # Migrate v0.0.1 → v0.0.2
+    if version == "0.0.1":
+        console.print("[yellow]Migrating save from v0.0.1 to v0.0.2...[/yellow]")
+
+        # Old saves didn't have location_items
+        if "location_items" not in loaded_data:
+            # Initialize with default items from YAML
+            loaded_data["location_items"] = {}
+            for location_id, location_data in locations.items():
+                # Load original items (player loses collected items - acceptable)
+                loaded_data["location_items"][location_id] = location_data["items"].copy()
+
+        # Update version
+        loaded_data["version"] = "0.0.2"
+        console.print("[green]Migration complete![/green]")
+
+    # Migrate v0.0.2 → v0.0.3 (future)
+    if version == "0.0.2":
+        # Add new fields for v0.0.3
+        if "quest_progress" not in loaded_data:
+            loaded_data["quest_progress"] = {}
+        loaded_data["version"] = "0.0.3"
+
+    # Restore state
+    player.current_location = loaded_data["current_location"]
+    player.inventory = loaded_data["inventory"]
+    # ...
+```
+
+**Benefits:**
+- Old saves don't become useless
+- Players don't lose progress when you update
+- Clear migration path for each version
+
+**Warning to players:**
+```python
+if version != CURRENT_VERSION:
+    console.print(
+        "[yellow]Note: Your save was migrated. "
+        "Some progress may be reset. "
+        "Save again to update to new format.[/yellow]"
+    )
+```
+
+### Extension 5: Cloud Saves
 
 Save to a remote server so players can play on multiple devices:
 

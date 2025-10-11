@@ -344,6 +344,114 @@ You should see **two** error messages (one for each broken exit). This proves yo
 
 ---
 
+## Concept: Sets and Set Operations
+
+Before we dive into graph connectivity, let's learn about **sets** - a powerful Python data structure perfect for validation.
+
+### What Are Sets?
+
+A **set** is like a list, but:
+- **No duplicates** - Each element appears once
+- **Unordered** - No indexes like `set[0]`
+- **Fast membership checking** - `if x in my_set` is very fast
+- **Set operations** - Union, intersection, difference
+
+**Creating sets:**
+
+```python
+# From a list (duplicates removed automatically)
+items = {"apple", "banana", "apple"}  # Only one "apple" kept
+print(items)  # {"apple", "banana"}
+
+# Empty set
+visited = set()
+
+# From a list
+numbers = set([1, 2, 2, 3])  # {1, 2, 3}
+```
+
+### Set Operations for Validation
+
+Sets are perfect for comparing what **should exist** vs what **actually exists**.
+
+**Example 1: Finding missing NPCs**
+
+```python
+# NPCs referenced in locations
+referenced_npcs = set()
+for location in locations.values():
+    for npc in location["npcs"]:
+        referenced_npcs.add(npc)  # Add to set
+
+# NPCs that actually exist
+existing_npcs = set(npcs.keys())
+
+# Find NPCs that are referenced but don't exist
+missing_npcs = referenced_npcs - existing_npcs
+
+# Report errors
+for npc in missing_npcs:
+    print(f"ERROR: NPC '{npc}' is referenced but doesn't exist")
+```
+
+**Example 2: Finding unused items**
+
+```python
+# Items that exist
+all_items = set(items.keys())  # {"wooden_branch", "health_potion", "sword"}
+
+# Items actually used in locations
+used_items = set()
+for location in locations.values():
+    for item in location["items"]:
+        used_items.add(item)
+
+# Items that exist but are never used
+unused = all_items - used_items
+print(f"Warning: These items are defined but never appear: {unused}")
+```
+
+**Example 3: Finding locations with no exits**
+
+```python
+# Locations with at least one exit
+locations_with_exits = set()
+for location_id, location_data in locations.items():
+    if location_data["exits"]:  # If exits dict is not empty
+        locations_with_exits.add(location_id)
+
+# All locations
+all_locations = set(locations.keys())
+
+# Dead-ends (might be intentional, but worth checking)
+dead_ends = all_locations - locations_with_exits
+for location in dead_ends:
+    print(f"Note: '{location}' has no exits (dead-end)")
+```
+
+### Key Set Operations
+
+```python
+a = {1, 2, 3, 4}
+b = {3, 4, 5, 6}
+
+# Union (all elements in either set)
+a | b  # {1, 2, 3, 4, 5, 6}
+
+# Intersection (elements in both sets)
+a & b  # {3, 4}
+
+# Difference (in a but not in b)
+a - b  # {1, 2}
+
+# Symmetric difference (in a or b, but not both)
+a ^ b  # {1, 2, 5, 6}
+```
+
+**For validation, we mostly use subtraction (-) to find missing elements.**
+
+---
+
 ## Concept: Graph Connectivity
 
 Here's a subtle bug validators can catch:
@@ -401,38 +509,85 @@ Implement a validator that finds unreachable locations.
 
 **This is the most complex validator**, but you can do it! Let's break it down.
 
-### Step 1: Understand the Algorithm
+### Step 1: Understand the Algorithm (Visual Walkthrough)
 
-**Visualize the process:**
+**Imagine this world:**
 
 ```
-Starting location: village_entrance
+    town_square -------- market
+         |                  |
+       north              west
+         |                  |
+  village_entrance --east-- old_mill
 
-Step 1: Visit village_entrance
-  - Mark as visited
-  - Check exits: north (town_square), east (old_mill)
-  - Add to "to visit": [town_square, old_mill]
-
-Step 2: Visit town_square
-  - Mark as visited
-  - Check exits: south (village_entrance - already visited), west (market)
-  - Add to "to visit": [old_mill, market]
-
-Step 3: Visit old_mill
-  - Mark as visited
-  - Check exits: west (village_entrance - already visited)
-  - To visit: [market]
-
-Step 4: Visit market
-  - Mark as visited
-  - No new locations to add
-
-Done! Visited: [village_entrance, town_square, old_mill, market]
-
-If you have a location "secret_room" not in visited → ERROR: unreachable
+  secret_room  (orphaned - no connections!)
 ```
+
+**BFS explores level by level, like ripples in water:**
+
+```
+Initial State:
+  visited = {}
+  to_visit = [village_entrance]  ← Start here
+
+─────────────────────────────────────────
+Round 1: Process village_entrance
+
+  ✓ Mark village_entrance as visited
+  ✓ Look at exits: {north: town_square, east: old_mill}
+  ✓ Add unvisited neighbors to queue
+
+  visited = {village_entrance}
+  to_visit = [town_square, old_mill]
+
+─────────────────────────────────────────
+Round 2: Process town_square
+
+  ✓ Mark town_square as visited
+  ✓ Look at exits: {south: village_entrance, north: market}
+  ✓ village_entrance already visited (skip)
+  ✓ market not visited (add to queue)
+
+  visited = {village_entrance, town_square}
+  to_visit = [old_mill, market]
+
+─────────────────────────────────────────
+Round 3: Process old_mill
+
+  ✓ Mark old_mill as visited
+  ✓ Look at exits: {west: village_entrance, north: market}
+  ✓ Both already visited or in queue (skip)
+
+  visited = {village_entrance, town_square, old_mill}
+  to_visit = [market]
+
+─────────────────────────────────────────
+Round 4: Process market
+
+  ✓ Mark market as visited
+  ✓ Look at exits: {south: town_square, east: old_mill}
+  ✓ Both already visited (skip)
+
+  visited = {village_entrance, town_square, old_mill, market}
+  to_visit = []  ← Empty! We're done
+
+─────────────────────────────────────────
+Final Check:
+
+  all_locations = {village_entrance, town_square, old_mill, market, secret_room}
+  visited = {village_entrance, town_square, old_mill, market}
+
+  unreachable = all_locations - visited
+             = {secret_room}
+
+  ❌ ERROR: secret_room is unreachable!
+```
+
+**Key insight:** BFS guarantees we find ALL reachable locations. Anything left over is unreachable.
 
 ### Step 2: Implement the Validator
+
+**Before we code:** This algorithm uses `.pop(0)` on a list to create a queue. For small games (< 100 locations), this works fine. For larger games, consider using `collections.deque` which is faster. We'll keep it simple for now!
 
 **Skeleton:**
 
@@ -441,20 +596,30 @@ def validate_graph_connectivity(locations, console, settings):
     """
     Check that all locations are reachable from the starting location.
 
-    Uses breadth-first search to find all reachable locations,
+    Uses breadth-first search (BFS) to find all reachable locations,
     then compares to the full list.
+
+    Args:
+        locations: Dictionary of all location data
+        console: Rich console for output
+        settings: Game settings
+
+    Returns:
+        True if all locations reachable, False if any unreachable
     """
     if not locations:
         return True  # No locations = nothing to validate
 
     # TODO: Set starting location
+    # (This should be where the player starts the game)
     starting_location = "village_entrance"
 
-    # TODO: Create sets for visited and to_visit
-    visited = set()  # Locations we've seen
-    to_visit = [starting_location]  # Queue of locations to check
+    # TODO: Create sets for visited and to_visit queue
+    visited = set()  # Locations we've already explored
+    to_visit = [starting_location]  # Queue of locations to check (FIFO)
 
     # TODO: While there are locations to visit
+    # Hint: while to_visit:
     while # ???:
 
         # TODO: Get next location from queue
