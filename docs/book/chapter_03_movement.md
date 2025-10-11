@@ -226,6 +226,8 @@ if action == "go":
 
 
             # TODO: Clear screen for clean look
+            # IMPORTANT: Clear AFTER updating current_location but BEFORE displaying
+            # This removes the old location from view so the new location appears fresh
             # Hint: console.clear()
 
 

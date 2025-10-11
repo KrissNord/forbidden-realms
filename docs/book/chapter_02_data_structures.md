@@ -658,6 +658,84 @@ for location_id, location_data in locations.items():
 
 ---
 
+## Concept: Error Handling Philosophy
+
+Before we debug specific errors, let's understand **when to use different error handling approaches**.
+
+### Two Approaches to Error Handling
+
+**Approach 1: Check First (Defensive)**
+
+Use `if` statements to check for problems before they happen:
+
+```python
+# Check if file exists before opening
+if os.path.exists("data/locations/village.yaml"):
+    with open("data/locations/village.yaml", "r") as file:
+        data = yaml.safe_load(file)
+else:
+    print("File not found!")
+```
+
+**When to use:** When the error is **expected** or **common**:
+- File might not exist (player hasn't created it yet)
+- Dictionary key might be missing (optional field)
+- List might be empty (no items in location)
+
+**Approach 2: Try First (Optimistic)**
+
+Use `try/except` to attempt the operation and catch errors:
+
+```python
+# Try to open file, catch error if it fails
+try:
+    with open("data/locations/village.yaml", "r") as file:
+        data = yaml.safe_load(file)
+except FileNotFoundError:
+    print("File not found!")
+except yaml.YAMLError:
+    print("YAML syntax error!")
+```
+
+**When to use:** When the error is **unexpected** or **rare**:
+- YAML file is corrupted (shouldn't happen normally)
+- Disk full (rare)
+- Permission denied (rare)
+
+### Which Should You Use?
+
+**General rule:**
+- **Expected situations** → Use `if` checks (clearer, more readable)
+- **Unexpected situations** → Use `try/except` (catches rare errors)
+
+**In this book:**
+- Chapter 2-3: Mostly `if` checks (learning the basics)
+- Chapter 4-5: Mix of both (validators use `if`, save/load uses `try/except`)
+- Later chapters: More `try/except` as code gets complex
+
+**Example: Loading a location**
+
+```python
+# Check if key exists (expected - some locations might not have items)
+if "items" in location_data:
+    items = location_data["items"]
+else:
+    items = []  # Default to empty list
+
+# OR use .get() which does the same thing
+items = location_data.get("items", [])
+
+# But for YAML syntax errors (unexpected), use try/except
+try:
+    location_data = yaml.safe_load(file)
+except yaml.YAMLError as e:
+    print(f"YAML syntax error: {e}")
+```
+
+**Don't worry about getting this perfect!** As you write more code, you'll develop intuition for which approach feels right.
+
+---
+
 ## Debugging Corner
 
 ### Error: `yaml.scanner.ScannerError`

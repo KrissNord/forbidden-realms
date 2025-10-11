@@ -292,7 +292,7 @@ Many text games have ASCII art titles. Let's create one!
 ================================
 ```
 
-**Option 2: Fancy**
+**Option 2: Fancy** (This shows "FORBIDDEN" - you can add "REALMS" below it)
 ```
 ███████╗ ██████╗ ██████╗ ██████╗ ██╗██████╗ ██████╗ ███████╗███╗   ██╗
 ██╔════╝██╔═══██╗██╔══██╗██╔══██╗██║██╔══██╗██╔══██╗██╔════╝████╗  ██║
@@ -300,6 +300,13 @@ Many text games have ASCII art titles. Let's create one!
 ██╔══╝  ██║   ██║██╔══██╗██╔══██╗██║██║  ██║██║  ██║██╔══╝  ██║╚██╗██║
 ██║     ╚██████╔╝██║  ██║██████╔╝██║██████╔╝██████╔╝███████╗██║ ╚████║
 ╚═╝      ╚═════╝ ╚═╝  ╚═╝╚═════╝ ╚═╝╚═════╝ ╚═════╝ ╚══════╝╚═╝  ╚═══╝
+
+██████╗ ███████╗ █████╗ ██╗     ███╗   ███╗███████╗
+██╔══██╗██╔════╝██╔══██╗██║     ████╗ ████║██╔════╝
+██████╔╝█████╗  ███████║██║     ██╔████╔██║███████╗
+██╔══██╗██╔══╝  ██╔══██║██║     ██║╚██╔╝██║╚════██║
+██║  ██║███████╗██║  ██║███████╗██║ ╚═╝ ██║███████║
+╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚══════╝╚═╝     ╚═╝╚══════╝
 ```
 
 **Where to get fancy ASCII art:** [patorjk.com/software/taag](https://patorjk.com/software/taag/)
@@ -390,10 +397,25 @@ Add a simple game loop to your program.
 # After displaying the title panel:
 
 # TODO: Create the game loop
-# while True:
-#     # Get input
-#     # Process commands
-#     # Break on quit
+while True:
+    # TODO: Get player input
+    # Hint: command = console.input("[bold white]> [/bold white]")
+
+
+    # TODO: Handle quit command
+    # if command == "quit":
+    #     console.print("[green]Thanks for playing![/green]")
+    #     break
+
+
+    # TODO: Handle help command
+    # elif command == "help":
+    #     console.print("Commands: help, quit", style="blue")
+
+
+    # TODO: Handle unknown commands
+    # else:
+    #     console.print(f"Unknown command: {command}", style="red")
 
 ```
 
