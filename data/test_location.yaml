@@ -1,0 +1,5 @@
+name: Dark Forest
+description: Ancient trees block out the sun.
+exits:
+  west: village_square
+  south: swamp
